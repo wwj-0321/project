@@ -63,19 +63,24 @@ export default {
   methods: {
     resetLoginFrom() {
       this.$refs.LoginFromref.resetFields()
+      // 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
     },
     login() {
+      // validate（）对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，
+      // 并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise
       this.$refs.LoginFromref.validate(async (validata) => {
         if (!validata) return
         //  console.log(validata)
         const { data: res } = await this.$http.post('login', this.LoginFrom)
         // console.log (res)
-        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        if (res.meta.status !== 200){return this.$message.error('登录失败')} 
+        // 调用组件message挂载在vue的$message
         // console.log('登录失败')
         this.$message.success('登录成功')
         // console.log ('登录成功')
         //   将令牌储存到sessionStorage
         window.sessionStorage.setItem('token', res.data.token)
+        // 编程式跳转
         this.$router.push('/home')
       })
     },
@@ -93,6 +98,8 @@ export default {
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
+  /* box-sizing: border-box;怪异盒模型  padding和border被包含在定义的width和height之内。
+  对象的实际宽度就等于设置的width值，即使定义border和padding也不会改变对象的实际宽度 */
 }
 .login_box {
   width: 450px;
@@ -103,6 +110,7 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+   /* transform: translate(-50%, -50%)移动左和上50% 以自己左上角为原点 */
 }
 .login_heard {
   height: 130px;
