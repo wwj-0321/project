@@ -38,9 +38,10 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
+            <!--  :index="'/'+subItem.path" 原来是ID跳转  这里设置获取的后台数据path -->
             <el-menu-item
               :index="'/'+subItem.path"
-              v-for="subItem in item.children"
+               v-for="subItem in item.children"
               :key="subItem.id"
               @click="saveNavStatus('/'+subItem.path)"
             >
