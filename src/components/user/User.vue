@@ -9,8 +9,8 @@
     <el-card>
       <!-- 搜索与添加区域 -->
       <el-row :gutter="20">
-        <!-- 3、区块间隔，通过给row添加gutter属性，可以给下属的col添加间距，推荐16
-            4、偏移，使用offset值是偏移的格数 -->
+        <!-- 区块间隔，通过给row添加gutter属性，可以给下属的col添加间距，推荐16
+            偏移，使用offset值是偏移的格数 -->
         <el-col :span="8">
           <el-input
             placeholder="请输入内容"
@@ -166,24 +166,24 @@
       @close="setRoleDialogClosed"
     >
       <div>
-        <p>当前用户：{{userinfo.username}}</p>
-        <p>当前的角色:{{userinfo.role_name}}</p>
-        <p>分配新角色：
+        <p>当前用户：{{ userinfo.username }}</p>
+        <p>当前的角色:{{ userinfo.role_name }}</p>
+        <p>
+          分配新角色：
           <el-select v-model="selectedRoleId" placeholder="请选择">
-    <el-option
-      v-for="item in rolesList "
-      :key="item.id"
-      :label="item.roleName"
-      :value="item.id">
-    </el-option>
-  </el-select>
+            <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </p>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="setRoleDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveRolesInfo"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="saveRolesInfo">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -247,11 +247,11 @@ export default {
       // 控制对话框的显示与隐藏
       addDialogVisible: false,
       // 所有的角色用户信息
-      rolesList:[],
+      rolesList: [],
       // 需要分配的角色用户信息
-      userinfo:{},
+      userinfo: {},
       //已经选中的角色ID值
-      selectedRoleId:'',
+      selectedRoleId: '',
       // 添加表单的数据
       addForm: {
         username: '',
@@ -295,14 +295,15 @@ export default {
   },
   methods: {
     // 展示分配角色的对话框
-async setRole(userinfo){
-      this.userinfo=userinfo
+    async setRole(userinfo) {
+      this.userinfo = userinfo
       // 在展示对话框之前获取用户角色的列表
-const {data:res}=await this.$http.get('roles')
-if(res.meta.status!==200){return this.$message.error('获取角色列表失败')}
-     this.rolesList=res.data
-     this.setRoleDialogVisible=true
-
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取角色列表失败')
+      }
+      this.rolesList = res.data
+      this.setRoleDialogVisible = true
     },
     // 请求用户列表
     async getUserlist() {
@@ -433,20 +434,27 @@ if(res.meta.status!==200){return this.$message.error('获取角色列表失败')
       this.$message.success('更新状态成功')
     },
     // 点击按钮 分配角色
-  async saveRolesInfo(){
-    if(!this.selectedRoleId){return this.$message.error('请选择要分配的角色')}
-      const {data:res}=await this.$http.put(`users/${this.userinfo.id}/role`,{rid:this.selectedRoleId})
-  if(res.meta.status!==200){return this.$message.error('更新角色失败')}
-  this.$message.success('更新角色成功')
-  this.getUserlist()
-  this.setRoleDialogVisible=false
-  },
-  // 监听分配角色对话框的关闭事件
-  setRoleDialogClosed(){
-this.selectedRoleId=''
-this.userinfo={}
-  }
-  
+    async saveRolesInfo() {
+      if (!this.selectedRoleId) {
+        return this.$message.error('请选择要分配的角色')
+      }
+      const {
+        data: res,
+      } = await this.$http.put(`users/${this.userinfo.id}/role`, {
+        rid: this.selectedRoleId,
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error('更新角色失败')
+      }
+      this.$message.success('更新角色成功')
+      this.getUserlist()
+      this.setRoleDialogVisible = false
+    },
+    // 监听分配角色对话框的关闭事件
+    setRoleDialogClosed() {
+      this.selectedRoleId = ''
+      this.userinfo = {}
+    },
   },
 }
 </script>

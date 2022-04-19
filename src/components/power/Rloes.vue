@@ -66,6 +66,9 @@
           </template>
         </el-table-column>
         <el-table-column type="index" label="#"></el-table-column>
+        <!-- 当el-table元素中注入data对象数组后，
+        在el-table-column中用prop属性来对应对象中的键名即可填入数据
+        ，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
         <el-table-column label="角色名称" prop="roleName"></el-table-column>
         <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
         <el-table-column label="操作" width="300px">
@@ -124,7 +127,9 @@ export default {
       rightslist: [],
       // 树形控件属性绑定
       treeProps: {
+        // 	指定子树为节点对象的某个属性值
         children: 'children',
+        // 指定节点标签为节点对象的某个属性值
         label: 'authName',
       },
       defkeys: [],
@@ -147,7 +152,9 @@ export default {
       this.getLeafKeys(role, this.defkeys)
       this.setRightDialogVisible = true
     },
+    // 通过递归的形式，获取角色下的所有三级权限的id，并保存到defkeys数组中
     getLeafKeys(node, arr) {
+      // 如果node节点不包含children属性则是三级节点
       if (!node.children) {
         return arr.push(node.id)
       }
@@ -158,7 +165,7 @@ export default {
       )
     },
     // 确定时获取keys(半勾选和全部勾选的id)以及发送请求
- async   allotRights() {
+ async  allotRights() {
       const keys=[
         ...this.$refs.treeRef.getCheckedKeys(),
         ...this.$refs.treeRef.getHalfCheckedKeys()

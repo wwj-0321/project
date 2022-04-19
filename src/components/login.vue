@@ -5,6 +5,7 @@
       <div class="login_heard">
         <img src="../assets/img/logo.png" alt="" />
       </div>
+       <!-- ref是实例引用LoginFromref就是实例对象名称  -->
       <el-form
         ref="LoginFromref"
         :model="LoginFrom"
@@ -71,6 +72,8 @@ export default {
       this.$refs.LoginFromref.validate(async (validata) => {
         if (!validata) return
         //  console.log(validata)
+        const data = await this.$http.post('login', this.LoginFrom)
+        console.log (data)
         const { data: res } = await this.$http.post('login', this.LoginFrom)
         // console.log (res)
         if (res.meta.status !== 200){return this.$message.error('登录失败')} 
@@ -88,6 +91,7 @@ export default {
 }
 </script>
 <style land="less" scoped>
+/* 单文件组件尽量加上scoped防止组件之间的样式冲突 */
 .login_containner {
   background: #2b4b6b;
   height: 100%;
