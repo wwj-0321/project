@@ -35,7 +35,9 @@ const routes=[
                 path:'/categories',component:Cate
              },
              {
+
                 path:'/params',component:Params
+
              }
     ]
 
