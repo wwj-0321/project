@@ -207,7 +207,8 @@ export default {
     // 验证手机号的规则
     var checkMobile = (rule, value, cb) => {
       // 验证手机号的正则表达式
-      const regMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+      const regMobile =
+        /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
 
       if (regMobile.test(value)) {
         return cb()
@@ -438,11 +439,12 @@ export default {
       if (!this.selectedRoleId) {
         return this.$message.error('请选择要分配的角色')
       }
-      const {
-        data: res,
-      } = await this.$http.put(`users/${this.userinfo.id}/role`, {
-        rid: this.selectedRoleId,
-      })
+      const { data: res } = await this.$http.put(
+        `users/${this.userinfo.id}/role`,
+        {
+          rid: this.selectedRoleId,
+        }
+      )
       if (res.meta.status !== 200) {
         return this.$message.error('更新角色失败')
       }
@@ -458,5 +460,5 @@ export default {
   },
 }
 </script>
-<style lang="less" scope>
+<style lang="less" scoped>
 </style>

@@ -5,6 +5,7 @@ body,
         margin: 0;
         padding: 0;
         min-width: 1366px;
+        /* 角色列表P82 16 展开列的箭头会换行  所以设置最小宽度1366px 最小的苹果屏幕 */
 }
 .el-breadcrumb{
         margin-bottom: 15px;

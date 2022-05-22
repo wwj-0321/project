@@ -104,7 +104,7 @@
         show-checkbox
         default-expand-all
         :default-checked-keys="defkeys"
-        ref='treeRef'
+        ref="treeRef"
         node-key="id"
         :data="rightslist"
         :props="treeProps"
@@ -165,19 +165,23 @@ export default {
       )
     },
     // 确定时获取keys(半勾选和全部勾选的id)以及发送请求
- async  allotRights() {
-      const keys=[
+    async allotRights() {
+      const keys = [
         ...this.$refs.treeRef.getCheckedKeys(),
-        ...this.$refs.treeRef.getHalfCheckedKeys()
-]
-// console.log(keys)
-        const idStr =keys.join(',')
-const {data:res}  =await   this.$http.post(`roles/${this.roleId}/rights`,
-        {rids:idStr})
-        if(res.meta.status!==200){return this.$message.error('添加权限失败')}
-        this.getRolelist()
-        this.setRightDialogVisible=false
-        this.$message.success('添加权限成功')
+        ...this.$refs.treeRef.getHalfCheckedKeys(),
+      ]
+      // console.log(keys)
+      const idStr = keys.join(',')
+      const { data: res } = await this.$http.post(
+        `roles/${this.roleId}/rights`,
+        { rids: idStr }
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error('添加权限失败')
+      }
+      this.getRolelist()
+      this.setRightDialogVisible = false
+      this.$message.success('添加权限成功')
     },
     // 关闭时重置数组 防止数组获取叠加
     setRightDialogClose() {

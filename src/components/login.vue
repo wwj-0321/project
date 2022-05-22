@@ -5,7 +5,7 @@
       <div class="login_heard">
         <img src="../assets/img/logo.png" alt="" />
       </div>
-       <!-- ref是实例引用LoginFromref就是实例对象名称  -->
+      <!-- ref是实例引用LoginFromref就是实例对象名称  -->
       <el-form
         ref="LoginFromref"
         :model="LoginFrom"
@@ -72,11 +72,13 @@ export default {
       this.$refs.LoginFromref.validate(async (validata) => {
         if (!validata) return
         //  console.log(validata)
-        const data = await this.$http.post('login', this.LoginFrom)
-        console.log (data)
+        // const data = await this.$http.post('login', this.LoginFrom)
+        // console.log (data)
         const { data: res } = await this.$http.post('login', this.LoginFrom)
         // console.log (res)
-        if (res.meta.status !== 200){return this.$message.error('登录失败')} 
+        if (res.meta.status !== 200) {
+          return this.$message.error('登录失败')
+        }
         // 调用组件message挂载在vue的$message
         // console.log('登录失败')
         this.$message.success('登录成功')
@@ -114,7 +116,7 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-   /* transform: translate(-50%, -50%)移动左和上50% 以自己左上角为原点 */
+  /* transform: translate(-50%, -50%)移动左和上50% 以自己左上角为原点 */
 }
 .login_heard {
   height: 130px;
